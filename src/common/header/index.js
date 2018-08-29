@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import {
-    HeaderWrapper
+    HeaderWrapper,
+    Logo
 } from './style';
 class Header extends Component {
-    redner() {
+    render() {
         return (
-            <HeaderWrapper>header</HeaderWrapper>
+            <HeaderWrapper>
+                <Logo />
+            </HeaderWrapper>
         )
     }
 }
