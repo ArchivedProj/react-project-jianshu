@@ -61,21 +61,7 @@ export const SearchWrapper = styled.div`
             color:white;
         }
     }
-    .slide-enter{
-        width:160px;
-        transition:all .2s ease-out;
-    }
-    .slide-enter-active{
-        width:240px;
-    }
 
-   .slide-exit{
-        width:240px;
-        transition:all .2s ease-out;
-    }
-    .slide-exit-active{
-        width:160px;
-    }
 `;
 
 export const NavSearch = styled.input.attrs({
@@ -83,6 +69,7 @@ export const NavSearch = styled.input.attrs({
 })`
     width:160px;
     height:38px;
+    outline:none;
     margin-top:9px;
     margin-left:20px;
     padding:0 30px 0 20px;
@@ -92,11 +79,26 @@ export const NavSearch = styled.input.attrs({
     background:#eee;
     font-size:14px;
     color:#666;
-    &::placeholder:{  //表示这个组件下面的placeholder
+    &::placeholder{  //表示这个组件下面的placeholder
         color:#999;
     }
     &.focused{
         width:240px;
+    }
+    &.slide-enter{
+        width:160px;
+        transition:all .2s ease-out;
+    }
+    &.slide-enter-active{
+        width:240px;
+    }
+
+   &.slide-exit{
+        width:240px;
+        transition:all .2s ease-out;
+    }
+    &.slide-exit-active{
+        width:160px;
     }
 `;
 
