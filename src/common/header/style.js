@@ -23,6 +23,8 @@ export const Nav = styled.div`
     width:960px;
     height:100%;
     margin:0 auto;
+    padding-right:70px;
+    box-sizing:border-box; //这个什么意思？
 `
 
 export const NavItem = styled.div`
@@ -39,5 +41,46 @@ export const NavItem = styled.div`
     }
     &.active{
         color:#ea6f5a;
+    }
+`
+export const NavSearch = styled.input.attrs({
+    placeholder:'搜索'
+})`
+    width:160px;
+    height:38px;
+    margin-top:9px;
+    margin-left:20px;
+    padding:0 20px;
+    box-sizing:border-box;
+    border:none;
+    border-radius:19px;
+    background:#eee;
+    font-size:14px;
+    &::placeholder:{  //表示这个组件下面的placeholder
+        color:#999;
+    }
+`
+
+export const Addition = styled.div`
+    position:absolute;
+    right:0;
+    top:0;
+    height:56px;
+`
+export const Button = styled.div`
+    float:right;
+    line-height:38px;
+    border-radius:19px;
+    margin-top:9px;
+    margin-right:20px;
+    font-size:14px;
+    padding:0 20px;
+    border:1px solid #ec6149;
+    &.reg{
+        color:#ec6149;
+    }
+    &.write{
+        color:#fff;
+        background:#ec6149;
     }
 `
