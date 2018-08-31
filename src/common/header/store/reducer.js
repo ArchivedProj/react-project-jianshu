@@ -1,7 +1,8 @@
 import { actionTypes } from './index';
 import {fromJS} from 'immutable'; //fromJS 模块 把一个JS对象转换成immtable对象
 const defaultState = fromJS({
-    focused: false
+    focused: false,
+    list:[]
 });
 
 export default (state = defaultState, action) => {
@@ -10,7 +11,9 @@ export default (state = defaultState, action) => {
     }
     if (action.type === actionTypes.INPUT_BLUR) {
         return state.set('focused',false);
-
+    }
+    if(action.type===actionTypes.GET_LIST){
+        return state.set('list', action.list);
     }
     return state;
 }

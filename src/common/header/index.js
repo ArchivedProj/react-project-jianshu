@@ -18,27 +18,7 @@ import {
     SearchInfoItem
 } from './style';
 
-const getListArea = (isShow) => {
-    if (isShow) {
-        return (<SearchInfo>
-            <SearchInfoTitle>热门搜索
-                <SearchInfoSwitcher>换一批</SearchInfoSwitcher>
-            </SearchInfoTitle>
-            <SearchInfoList>
-                <SearchInfoItem>教育</SearchInfoItem>
-                <SearchInfoItem>文化</SearchInfoItem>
-                <SearchInfoItem>React</SearchInfoItem>
-                <SearchInfoItem>C#</SearchInfoItem>
-                <SearchInfoItem>JAVA</SearchInfoItem>
-                <SearchInfoItem>SWIFT</SearchInfoItem>
-                <SearchInfoItem>GO</SearchInfoItem>
-            </SearchInfoList>
-        </SearchInfo>)
-    }
-    else {
-        return null;
-    }
-}
+
 
 class Header extends Component {
 
@@ -67,7 +47,7 @@ class Header extends Component {
                         </CSSTransition>
                         <i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe62b;</i>
 
-                        {getListArea(this.props.focused)}
+                        {this.getListArea(this.props.focused)}
 
                     </SearchWrapper>
                 </Nav>
@@ -81,19 +61,36 @@ class Header extends Component {
         )
     }
 
-
+    getListArea = (isShow) => {
+        if (isShow) {
+            return (<SearchInfo>
+                <SearchInfoTitle>热门搜索
+                    <SearchInfoSwitcher>换一批</SearchInfoSwitcher>
+                </SearchInfoTitle>
+                <SearchInfoList>
+                    {this.props.list.map(item => {
+                        return <SearchInfoItem>{item}</SearchInfoItem>
+                    })}
+                </SearchInfoList>
+            </SearchInfo>)
+        }
+        else {
+            return null;
+        }
+    }
 }
 
 const mapStateToProps = (state) => {
     return {
-        focused: state.getIn(['header', 'focused'])
-        // focused: state.get('header').get('focused') 
+        focused: state.getIn(['header', 'focused']),
+        list: state.getIn(['header', 'list'])
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
         onInputFocus() {
             let action = actionCreators.getInputFocusedAction();
+            dispatch(actionCreators.getList());
             dispatch(action);
         },
         onInputBlur() {
