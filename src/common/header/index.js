@@ -24,6 +24,7 @@ class Header extends Component {
 
     render() {
         const { focused, onInputFocus, onInputBlur } = this.props;
+
         return (
             <HeaderWrapper>
                 <Logo />
@@ -63,15 +64,16 @@ class Header extends Component {
     }
 
     getListArea = () => {
-        const {focused, list} = this.props
-        if (focused) {
-            return (<SearchInfo>
+        const { focused, pagedList ,mouseEnter, mouseLeave, mouseIn, switchToNextPageContent} = this.props;
+
+        if (focused || mouseIn) {
+            return (<SearchInfo onMouseEnter={()=>mouseEnter()}  onMouseLeave={()=>mouseLeave()}>
                 <SearchInfoTitle>热门搜索
-                    <SearchInfoSwitcher>换一批</SearchInfoSwitcher>
+                    <SearchInfoSwitcher onClick={()=> switchToNextPageContent()}>换一批</SearchInfoSwitcher>
                 </SearchInfoTitle>
                 <SearchInfoList>
-                    {list.map(item => {
-                        return <SearchInfoItem>{item}</SearchInfoItem>
+                    {pagedList.map((item, index) => {
+                        return <SearchInfoItem key={index}>{item}</SearchInfoItem>
                     })}
                 </SearchInfoList>
             </SearchInfo>)
@@ -85,7 +87,9 @@ class Header extends Component {
 const mapStateToProps = (state) => {
     return {
         focused: state.getIn(['header', 'focused']),
-        list: state.getIn(['header', 'list'])  //这个地方获取的list是一个immutable类型的，好在也提供了map函数。
+        pagedList: state.getIn(['header', 'pagedList']), //这个地方获取的list是一个immutable类型的，好在也提供了map函数。
+        currentPage: state.getIn(['header', 'page']),
+        mouseIn: state.getIn(['header', 'mouseIn']),
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -98,6 +102,15 @@ const mapDispatchToProps = (dispatch) => {
         onInputBlur() {
             let action = actionCreators.getInputBlurAction();
             dispatch(action);
+        },
+        mouseEnter(){
+            dispatch(actionCreators.mouseEnter());
+        },
+        mouseLeave(){
+            dispatch(actionCreators.mouseLeave());
+        },
+        switchToNextPageContent(){
+            dispatch(actionCreators.switchToNextPageContent());
         }
     }
 }
