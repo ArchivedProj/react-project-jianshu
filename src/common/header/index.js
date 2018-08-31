@@ -47,7 +47,7 @@ class Header extends Component {
                         </CSSTransition>
                         <i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe62b;</i>
 
-                        {this.getListArea(this.props.focused)}
+                        {this.getListArea()}
 
                     </SearchWrapper>
                 </Nav>
@@ -61,8 +61,8 @@ class Header extends Component {
         )
     }
 
-    getListArea = (isShow) => {
-        if (isShow) {
+    getListArea = () => {
+        if (this.props.focused) {
             return (<SearchInfo>
                 <SearchInfoTitle>热门搜索
                     <SearchInfoSwitcher>换一批</SearchInfoSwitcher>
@@ -83,7 +83,7 @@ class Header extends Component {
 const mapStateToProps = (state) => {
     return {
         focused: state.getIn(['header', 'focused']),
-        list: state.getIn(['header', 'list'])
+        list: state.getIn(['header', 'list'])  //这个地方获取的list是一个immutable类型的，好在也提供了map函数。
     }
 }
 const mapDispatchToProps = (dispatch) => {
