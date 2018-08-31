@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
-import {getInputFocusedAction, getInputBlurAction} from './store/actionCreators';
+import {actionCreators} from './store';
 import {
     HeaderWrapper,
     Logo,
@@ -62,11 +62,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onInputFocus(){
-            let action  = getInputFocusedAction();
+            let action  = actionCreators.getInputFocusedAction();
             dispatch(action);
         },
         onInputBlur(){
-            let action  = getInputBlurAction();
+            let action  = actionCreators.getInputBlurAction();
             dispatch(action);
         }
     }
