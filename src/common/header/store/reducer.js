@@ -22,12 +22,13 @@ export default (state = defaultState, action) => {
                 let stateInfo = state.toJS();
                 let totalPage = Math.ceil(listInfo.length / stateInfo.pageSize);
 
-                let list = [];
-                let length = listInfo.length > stateInfo.pageSize ? stateInfo.pageSize : listInfo.length;
-                for (let i = 0; i < length; i++) {
-                    list.push(listInfo[i]);
-                }
-                return state.set('pagedList', fromJS(list)).set('list', action.list).set('totalPage', totalPage);
+                // let pagedList = [];
+                // let length = listInfo.length > stateInfo.pageSize ? stateInfo.pageSize : listInfo.length;
+                // for (let i = 0; i < length; i++) {
+                //     list.push(listInfo[i]);
+                // }
+                let pagedList = getPagedList(listInfo, stateInfo.pageSize, 1);
+                return state.set('pagedList', fromJS(pagedList)).set('list', action.list).set('totalPage', totalPage);
             }
         case actionTypes.MOUSE_IN:
             { return state.set('mouseIn', true); }
@@ -39,10 +40,9 @@ export default (state = defaultState, action) => {
 
             let pageNo = stateInfo.page + 1;
             pageNo = pageNo > stateInfo.totalPage ? 1 : pageNo;
-            let pagedList = [];
-
+            let pagedList = getPagedList(listInfo, stateInfo.pageSize, pageNo);
             return state.merge({
-                'list': fromJS(pagedList),
+                'pagedList': fromJS(pagedList),
                 'page': pageNo
             })
         }
@@ -52,5 +52,8 @@ export default (state = defaultState, action) => {
 
 
 function getPagedList(list, pageSize, pageNo) {
-
+    if (!list || list.length === 0 || pageNo < 1 || pageSize <= 0) return null;
+    let start = pageSize * (pageNo - 1);
+    let end = pageNo * pageSize;
+    return list.slice(start, end);
 }
