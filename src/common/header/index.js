@@ -98,9 +98,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onInputFocus(pagedList) {
-            console.log(pagedList);
-            let action = actionCreators.getInputFocusedAction();
-            dispatch(actionCreators.getList());
+            if(pagedList.size===0){
+                dispatch(actionCreators.getList());
+            }
+            let action = actionCreators.getInputFocusedAction();            
             dispatch(action);
         },
         onInputBlur() {
