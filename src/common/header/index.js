@@ -23,7 +23,7 @@ import {
 class Header extends Component {
 
     render() {
-        const { focused, onInputFocus, onInputBlur } = this.props;
+        const { focused, onInputFocus, onInputBlur, pagedList } = this.props;
 
         return (
             <HeaderWrapper>
@@ -43,11 +43,11 @@ class Header extends Component {
                         >
                             <NavSearch
                                 className={focused ? 'focused' : ''}
-                                onFocus={() => onInputFocus()}
+                                onFocus={() => onInputFocus(pagedList)}
                                 onBlur={() => onInputBlur()}
                             ></NavSearch>
                         </CSSTransition>
-                        <i className={focused ? 'focused iconfont' : 'iconfont'}>&#xe62b;</i>
+                        <i className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe62b;</i>
 
                         {this.getListArea()}
 
@@ -64,12 +64,15 @@ class Header extends Component {
     }
 
     getListArea = () => {
-        const { focused, pagedList ,mouseEnter, mouseLeave, mouseIn, switchToNextPageContent} = this.props;
+        const { focused, pagedList, mouseEnter, mouseLeave, mouseIn, switchToNextPageContent } = this.props;
 
         if (focused || mouseIn) {
-            return (<SearchInfo onMouseEnter={()=>mouseEnter()}  onMouseLeave={()=>mouseLeave()}>
+            return (<SearchInfo onMouseEnter={() => mouseEnter()} onMouseLeave={() => mouseLeave()}>
                 <SearchInfoTitle>热门搜索
-                    <SearchInfoSwitcher onClick={()=> switchToNextPageContent()}>换一批</SearchInfoSwitcher>
+                    <SearchInfoSwitcher onClick={() => switchToNextPageContent(this.spinIcon)}>
+                        <i ref={(icon) => this.spinIcon = icon} className='iconfont spin'>&#xe851;</i>
+                        换一批
+                    </SearchInfoSwitcher>
                 </SearchInfoTitle>
                 <SearchInfoList>
                     {pagedList.map((item, index) => {
@@ -94,7 +97,8 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        onInputFocus() {
+        onInputFocus(pagedList) {
+            console.log(pagedList);
             let action = actionCreators.getInputFocusedAction();
             dispatch(actionCreators.getList());
             dispatch(action);
@@ -103,13 +107,21 @@ const mapDispatchToProps = (dispatch) => {
             let action = actionCreators.getInputBlurAction();
             dispatch(action);
         },
-        mouseEnter(){
+        mouseEnter() {
             dispatch(actionCreators.mouseEnter());
         },
-        mouseLeave(){
+        mouseLeave() {
             dispatch(actionCreators.mouseLeave());
         },
-        switchToNextPageContent(){
+        switchToNextPageContent(spinIcon) {
+            let originAngle = spinIcon.style.transform.replace(/[^0-9]/ig, '');
+            if (originAngle) {
+                originAngle = parseInt(originAngle,10);
+            }
+            else {
+                originAngle = 0;
+            }
+            spinIcon.style.transform = `rotate(${originAngle + 360}deg)`;
             dispatch(actionCreators.switchToNextPageContent());
         }
     }
