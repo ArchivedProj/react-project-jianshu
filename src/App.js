@@ -3,6 +3,8 @@ import Header from './common/header';
 import store from './store/index';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom'
+import Home from './pages/home';
+import Detail from './pages/detail';
 class App extends Component {
   render() {
     return (
@@ -11,8 +13,8 @@ class App extends Component {
           <Header />
           <BrowserRouter>
             <div>
-              <Route path='/'  render={() => <div>首页</div>}></Route>
-              <Route path='/detail'  render={() => <div>Detail page</div>}></Route>
+              <Route path='/' exact component={Home}></Route>
+              <Route path='/detail' exact component={Detail}></Route>
             </div>
           </BrowserRouter>
         </div>
