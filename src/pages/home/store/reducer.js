@@ -9,8 +9,8 @@ export default (state = defaultState, action) => {
     switch (action.type) {
         case LOAD_DATA: {
             return state.merge({
-                topicList: fromJS(action.data.topicList),
-                articleList: fromJS(action.data.articleList)
+                topicList: fromJS(action.topicList),
+                articleList: fromJS(action.articleList)
             });
         }
         default:
