@@ -16,7 +16,7 @@ class List extends Component {
                 {
                     articleListJS.map((item, index) => {
                         return (
-                            <Link key={index} to='/detail'>
+                            <Link key={index} to={`/detail/${item.id}`}>
                                 <ListItem key={`${item.id}-${index}`}>
                                     <img src={item.imgSrc} alt="" />
                                     <ListInfo>
