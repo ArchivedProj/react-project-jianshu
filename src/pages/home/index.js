@@ -4,7 +4,8 @@ import { actionCreators } from './store';
 import {
     HomeWrapper,
     HomeLeft,
-    HomeRight
+    HomeRight,
+    BackTop
 } from './style.js';
 import List from './components/List.js';
 import Recommend from './components/Recommend.js';
@@ -24,12 +25,16 @@ class Home extends Component {
                     <Recommend></Recommend>
                     <Writer />
                 </HomeRight>
+                <BackTop onClick={this.handleScrollTop}>回到顶部</BackTop>
             </HomeWrapper>
         )
     }
     componentDidMount() {
         let { initData } = this.props;
         initData();
+    }
+    handleScrollTop(){
+        window.scrollTo(0,0);
     }
 }
 
