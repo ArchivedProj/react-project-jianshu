@@ -1,4 +1,4 @@
-import { LOAD_DATA, GET_MORE_LIST } from './actionTypes';
+import { LOAD_DATA, GET_MORE_LIST, CHANGE_SHOW_SCROLL } from './actionTypes';
 import axios from 'axios';
 import { List } from 'immutable';
 const getInitDataAction = (result) => {
@@ -36,3 +36,8 @@ export const getMoreList = () => {
         }).catch(error => console.log(error));
     }
 }
+
+export const getShowScrollAction = (state)=>({
+    type:CHANGE_SHOW_SCROLL,
+    showScroll:state
+});

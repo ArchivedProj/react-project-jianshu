@@ -25,25 +25,43 @@ class Home extends Component {
                     <Recommend></Recommend>
                     <Writer />
                 </HomeRight>
-                <BackTop onClick={this.handleScrollTop}>回到顶部</BackTop>
+                {
+                    this.props.showScroll ? (<BackTop onClick={this.handleScrollTop}>回到顶部</BackTop>) : null
+                }
+
             </HomeWrapper>
         )
     }
     componentDidMount() {
         let { initData } = this.props;
         initData();
+        window.addEventListener('scroll', this.props.changeShowScrollState)
     }
-    handleScrollTop(){
-        window.scrollTo(0,0);
+    handleScrollTop() {
+        window.scrollTo(0, 0);
+    }
+}
+
+const mapState = (state) => {
+    return {
+        showScroll: state.getIn(['home', 'showScroll'])
     }
 }
 
 const mapDispatch = (dispatch) => {
     return {
-        initData(){
+        initData() {
             dispatch(actionCreators.initData());
+        },
+        changeShowScrollState() {
+            if (document.documentElement.scrollTop < 400) {
+                dispatch(actionCreators.getShowScrollAction(false));
+            } else {
+                dispatch(actionCreators.getShowScrollAction(true));
+            }
+
         }
     }
 }
 
-export default connect(null, mapDispatch)(Home);
+export default connect(mapState, mapDispatch)(Home);

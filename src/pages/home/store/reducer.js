@@ -1,8 +1,9 @@
 import { fromJS } from 'immutable';
-import { LOAD_DATA, GET_MORE_LIST } from './actionTypes';
+import { LOAD_DATA, GET_MORE_LIST,CHANGE_SHOW_SCROLL } from './actionTypes';
 const defaultState = fromJS({
     topicList: [],
-    articleList: []
+    articleList: [],
+    showScroll:false
 });
 
 export default (state = defaultState, action) => {
@@ -17,6 +18,12 @@ export default (state = defaultState, action) => {
             let result = state.get("articleList").concat(action.articleList);
             console.log(result);
             return state.set('articleList', result);
+        }
+        case CHANGE_SHOW_SCROLL: {
+            if(state.showScroll===action.showScroll){
+                return state
+            }
+            return state.set('showScroll',action.showScroll);
         }
         default:
             return state;

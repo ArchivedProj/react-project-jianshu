@@ -1,2 +1,3 @@
 export const LOAD_DATA = "HOME/LOAD_DATA";
 export const GET_MORE_LIST = "HOME/GET_MORE_LIST";
+export const CHANGE_SHOW_SCROLL = "HOME/CHANGE_SHOW_SCROLL";
