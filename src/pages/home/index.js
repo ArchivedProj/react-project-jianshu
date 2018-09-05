@@ -37,6 +37,11 @@ class Home extends Component {
         initData();
         window.addEventListener('scroll', this.props.changeShowScrollState)
     }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.props.changeShowScrollState)
+    }
+
     handleScrollTop() {
         window.scrollTo(0, 0);
     }
