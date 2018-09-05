@@ -9,6 +9,7 @@ import {
 
 class Detail extends Component {
     render() {
+        console.log(this.props.match.params.id);
         let { title, content } = this.props;
         return (
             <DetailWrapper>
