@@ -3,7 +3,7 @@ import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { actionCreators } from './store';
-import { actionCreators as loginActionCreators } from '../../pages/login/store';    
+import { actionCreators as loginActionCreators } from '../../pages/login/store';
 import {
     HeaderWrapper,
     Logo,
@@ -62,9 +62,11 @@ class Header extends Component {
                     </SearchWrapper>
                 </Nav>
                 <Addition>
-                    <Button className="write">
-                        <i className="iconfont">&#xe624;</i>
-                        写文章</Button>
+                    <Link to="/writer">
+                        <Button className="write">
+                            <i className="iconfont">&#xe624;</i>
+                            写文章</Button>
+                    </Link>
                     <Button className="reg">注册</Button>
                 </Addition>
             </HeaderWrapper>
@@ -134,7 +136,7 @@ const mapDispatchToProps = (dispatch) => {
             spinIcon.style.transform = `rotate(${originAngle + 360}deg)`;
             dispatch(actionCreators.switchToNextPageContent());
         },
-        logout(){
+        logout() {
             dispatch(loginActionCreators.getLogoutAction());
         }
     }

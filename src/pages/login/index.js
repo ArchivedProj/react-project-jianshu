@@ -11,7 +11,6 @@ import {
 class Login extends Component {
     render() {
         const {login, isLogin } = this.props;
-        console.log(isLogin);
         if (!isLogin) {
             return (
                 <LoginWrapper>
