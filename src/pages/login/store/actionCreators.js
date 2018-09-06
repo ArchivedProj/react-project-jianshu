@@ -10,7 +10,7 @@ export const login = (account, password) => {
         axios.get(`/api/login.json?account=${account}&password=${password}`).then(res => {
             if (!res || !res.data || !res.data.success) return;
 
-            let loginInfo = res.data.data;
+            // let loginInfo = res.data.data;
             dispatch(getLoginAction(true));
         }).catch(error => console.log(error));
     }
