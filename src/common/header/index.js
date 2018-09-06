@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { actionCreators } from './store';
 import {
     HeaderWrapper,
@@ -24,17 +24,19 @@ import {
 class Header extends Component {
 
     render() {
-        const { focused, onInputFocus, onInputBlur, pagedList } = this.props;
+        const { focused, onInputFocus, onInputBlur, pagedList, isLogin } = this.props;
 
         return (
             <HeaderWrapper>
                 <Link to='/'>
-                <Logo />
+                    <Logo />
                 </Link>
                 <Nav>
                     <NavItem className='left active'>首页</NavItem>
                     <NavItem className='left'>下载App</NavItem>
-                    <NavItem className='right'>登陆</NavItem>
+                    <Link to="/login">
+                        <NavItem className='right'>{isLogin ? "退出" : "登陆"}</NavItem>
+                    </Link>
                     <NavItem className='right'>
                         <i className="iconfont">&#xe636;</i>
                     </NavItem>
@@ -96,15 +98,16 @@ const mapStateToProps = (state) => {
         pagedList: state.getIn(['header', 'pagedList']), //这个地方获取的list是一个immutable类型的，好在也提供了map函数。
         currentPage: state.getIn(['header', 'page']),
         mouseIn: state.getIn(['header', 'mouseIn']),
+        isLogin: state.getIn(["login", "login"])
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
         onInputFocus(pagedList) {
-            if(pagedList.size===0){
+            if (pagedList.size === 0) {
                 dispatch(actionCreators.getList());
             }
-            let action = actionCreators.getInputFocusedAction();            
+            let action = actionCreators.getInputFocusedAction();
             dispatch(action);
         },
         onInputBlur() {
@@ -120,7 +123,7 @@ const mapDispatchToProps = (dispatch) => {
         switchToNextPageContent(spinIcon) {
             let originAngle = spinIcon.style.transform.replace(/[^0-9]/ig, '');
             if (originAngle) {
-                originAngle = parseInt(originAngle,10);
+                originAngle = parseInt(originAngle, 10);
             }
             else {
                 originAngle = 0;
