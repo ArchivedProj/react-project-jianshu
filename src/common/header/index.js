@@ -3,6 +3,7 @@ import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { actionCreators } from './store';
+import { actionCreators as loginActionCreators } from '../../pages/login/store';    
 import {
     HeaderWrapper,
     Logo,
@@ -24,7 +25,7 @@ import {
 class Header extends Component {
 
     render() {
-        const { focused, onInputFocus, onInputBlur, pagedList, isLogin } = this.props;
+        const { focused, onInputFocus, onInputBlur, pagedList, isLogin, logout } = this.props;
 
         return (
             <HeaderWrapper>
@@ -35,7 +36,9 @@ class Header extends Component {
                     <NavItem className='left active'>首页</NavItem>
                     <NavItem className='left'>下载App</NavItem>
                     <Link to="/login">
-                        <NavItem className='right'>{isLogin ? "退出" : "登陆"}</NavItem>
+                        {
+                            isLogin ? <NavItem className='right' onClick={logout}>退出</NavItem> : <NavItem className='right'>登陆</NavItem>
+                        }
                     </Link>
                     <NavItem className='right'>
                         <i className="iconfont">&#xe636;</i>
@@ -130,6 +133,9 @@ const mapDispatchToProps = (dispatch) => {
             }
             spinIcon.style.transform = `rotate(${originAngle + 360}deg)`;
             dispatch(actionCreators.switchToNextPageContent());
+        },
+        logout(){
+            dispatch(loginActionCreators.getLogoutAction());
         }
     }
 }
